@@ -1,0 +1,427 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+
+  <title>Bookmarks</title>
+
+  <style type="text/css" media="screen,print">@import url("docs.css");</style>
+<META http-equiv=Content-Type content="text/html; charset=utf-8"></head>
+
+<body>
+<div><a name="top"></a></div>
+
+<div id="header">
+<table cellpadding="0" cellspacing="0" border="0" style="width:100%;"><tr>
+<td class="docheading" style="width:300px;"><h1 style="font-size: 18px; font-weight: bold;">intoEEtive.com</h1></td>
+<td class="searchbox">
+
+</td>
+</tr>
+</table>
+</div>
+
+
+<div id="navlinks">
+<a href="http://www.intoeetive.com/">intoEEtive.com</a> &gt;
+<a href="http://www.intoeetive.com/index.php/category/extending_ee">EE add-ons</a> &gt;
+<a href="http://www.intoeetive.com/index.php/comments/bookmarks">Bookmarks</a>
+</div>
+
+
+<div id="content">
+
+	<h1>Bookmarks</h1>
+
+	<p>This module lets people bookmark (add to favorites) ExpressionEngine entries, members, comments and categories for quick access.</p>
+    
+   	<ul>		
+        
+        <li><a href="#check">Checking/adding a bookmark</a></li>
+        <li><a href="#list">Listing bookmarked:</a>
+            <ul>
+            <li><a href="#list-entries">Entries</a></li>
+            <li><a href="#list-members">Members</a></li>   
+			<li><a href="#list-comments">Comments</a></li>           
+            <li><a href="#list-categories">Categories</a></li>
+            </ul>
+        </li>
+        <li><a href="#by">Listing people who bookmarked certain data</a></li>
+        <li><a href="#total">Total bookmarks</a></li>
+        
+	</ul>
+
+	<h2><a name="check" href="#top">&uarr;</a>Checking/adding a bookmark</h2>
+
+<code>
+{exp:bookmarks:check type="comment" data_id="{comment_id}" form="yes" return="SAME_PAGE"}<br />
+{if not_bookmarked}<br />
+&lt;input type="submit" value="add bookmark" /&gt;<br />
+{/if}<br />
+{if bookmarked}<br />
+&lt;input type="submit" value="remove bookmark" /&gt;<br />
+{/if}<br />
+{/exp:bookmarks:check}
+</code>
+
+<p><strong>{exp:bookmarks:check}</strong> checks whether given data item was bookmarked. It can also display form to add/remove bookmark.</p>
+
+<p><strong>Conditional variables:</strong>
+<ul>
+<li><dfn>{if bookmarked}{/if}</dfn> &mdash; displayed if data has been bookmarked</li>
+<li><dfn>{if not_bookmarked}{/if}</dfn> &mdash; displayed if data has not been bookmarked</li>
+</ul>
+</p>
+
+<p><strong>Tag parameters:</strong>
+<ul>
+<li><dfn>type</dfn> &mdash; the type of data that is checked/bookmarked. Can be 'entry', 'comment', 'member' or 'category'. Defaults to 'entry'</li>
+<li><dfn>data_id</dfn> &mdash; the ID of item to check/bookmark (value of entry_id, comment_id, member_id or category_id)</li>
+<li><dfn>form="yes"</dfn> &mdash; wraps data into for for adding/removing bookmark</li>
+<li><dfn>id</dfn> &mdash; form ID (defaults to 'bookmark_form')</li>
+<li><dfn>class</dfn> &mdash; form class (defaults to 'bookmark_form')</li>
+<li><dfn>name</dfn> &mdash; form name (defaults to 'bookmark_form')</li>
+<li><dfn>return</dfn> &mdash; a page to return after bookmarking. Can be a full URL or URI segments.<br />Use <em>return="SAME_PAGE"</em> to return user to the page used to display form.</li>
+<li><dfn>skip_success_message="yes"</dfn> &mdash; force redirect to return page without showing success message.</li>
+<li><dfn>ajax="yes"</dfn> &mdash; turn on AJAX mode. The success or error messages shown upon submission will be shown as simple text, without using message templates. The "return" parameter will not be functional if you supply this parameter.</li>
+</ul>
+</p>
+
+	<h2><a name="list" href="#top">&uarr;</a>Lising bookmarked data</h2>
+	
+	<h3><a name="list-entries" href="#top">&uarr;</a>Entries</h3>
+
+<code>
+{exp:bookmarks:entries member_data="yes" custom_fields="yes"}<br />
+{if count==1}		<br />
+&lt;div class="box2"&gt;<br />
+	&lt;div class="header"&gt;<br />
+		&lt;div class="t"&gt;<br />
+			&lt;h3&gt;MY BOOKMARKS&lt;/h3&gt;<br />
+		&lt;/div&gt;<br />
+	&lt;/div&gt;<br />
+	&lt;ul class="broadcasters"&gt;<br />
+{/if}		<br />
+		&lt;li&gt;<br />
+			&lt;a class="img" href="{path=entry/{url_title}}"&gt;&lt;img src="{photo_url}" alt="{title}" /&gt;&lt;/a&gt;<br />
+			&lt;div class="text"&gt;<br />
+				&lt;a href="{path=entry/{url_title}}"&gt;{title}&lt;/a&gt;<br />
+				{if description}&lt;p&gt;{description}&lt;/p&gt;{/if}}<br />
+			&lt;/div&gt;<br />
+		&lt;/li&gt;<br />
+{if count==total_results}<br />
+	&lt;/ul&gt;<br />
+&lt;/div&gt;<br />
+{/if}<br />
+{/exp:bookmarks:entries}<br />
+</code>
+
+<p><strong>{exp:bookmarks:entries}</strong> tag will display all channel entries bookmarked by user.</p>
+
+<p><strong>Tag parameters (all optional):</strong>
+<ul>
+<li><dfn>member_id</dfn> &mdash; ID of member to fetch bookmarks. Defaults to logged in user</li>
+<li><dfn>username</dfn> &mdash; alternatively, you can specify username istead of member_id</li>
+<li><dfn>group_id</dfn> &mdash; set this parameter to Channel ID if you want to restrict output to entries from certain channel</li>
+<li><dfn>custom_fields="yes"</dfn> &mdash; if set to "yes", will also parse custom fields data for bookmarked entries</li>
+<li><dfn>member_data="yes"</dfn> &mdash; if set to "yes", will also parse entry author's data</li>
+<li><dfn>prefix</dfn> &mdash; optional prefix for variables. Ex. if you set prefix="bookmark" you'll be able to use {bookmark:title} instead of {title} </li>
+<li><dfn>sort</dfn> &mdash; sorting order. Possible values are 'asc', 'desc' (default) and 'random'</li>
+<li><dfn>return_ids_string</dfn> &mdash; return ONLY pipe-separated string ot entry_ids (1|7|15|26) as <dfn>{ids_string}</dfn> variable</li>
+</ul>
+</p>
+
+<p><strong>Single variables:</strong>
+<ul>
+<li><dfn>remove_url</dfn> &mdash; URL that user can click to remove entry from bookmarks</li>
+<li><dfn>bookmark_date format="%Y-%m-%d"</dfn> &mdash; the date when entry was favorited</li>
+<li><dfn>entry_id</dfn></li>
+<li><dfn>title</dfn></li>
+<li><dfn>url_title</dfn></li>
+<li><dfn>entry_date</dfn></li>
+<li>and other standard entry fields</li>
+</ul>
+</p>
+
+<p>Additionally, if you have custom_fields="yes" set then all custom entry fields are parsed.</p>
+
+<p>If you have member_data="yes" set then entry author's standard member profile fields are also parsed.</p>
+
+
+
+	<h3><a name="list-members" href="#top">&uarr;</a>Members</h3>
+
+<code>
+{exp:bookmarks:members custom_fields="yes"}<br />
+{if count==1}		<br />
+&lt;div class="box2"&gt;<br />
+	&lt;div class="header"&gt;<br />
+		&lt;div class="t"&gt;<br />
+			&lt;h3&gt;MY BOOKMARKED USERS&lt;/h3&gt;<br />
+		&lt;/div&gt;<br />
+	&lt;/div&gt;<br />
+	&lt;ul class="broadcasters"&gt;<br />
+{/if}		<br />
+		&lt;li&gt;<br />
+			&lt;a class="img" href="{path=member/{username}}"&gt;&lt;img src="{photo_url}" alt="{screen_name}" /&gt;&lt;/a&gt;<br />
+			&lt;div class="text"&gt;<br />
+				&lt;a href="{path=member/{username}}"&gt;{screen_name}&lt;/a&gt;<br />
+				{if member_description}&lt;p&gt;{member_description}&lt;/p&gt;{/if}}<br />
+			&lt;/div&gt;<br />
+		&lt;/li&gt;<br />
+{if count==total_results}<br />
+	&lt;/ul&gt;<br />
+&lt;/div&gt;<br />
+{/if}<br />
+{/exp:bookmarks:members}<br />
+</code>
+
+<p><strong>{exp:bookmarks:members}</strong> tag will display all site members bookmarked by user.</p>
+
+<p><strong>Tag parameters (all optional):</strong>
+<ul>
+<li><dfn>member_id</dfn> &mdash; ID of member to fetch bookmarks. Defaults to logged in user</li>
+<li><dfn>username</dfn> &mdash; alternatively, you can specify username istead of member_id</li>
+<li><dfn>group_id</dfn> &mdash; set this parameter to Group ID if you want to restrict output to members from certain groups</li>
+<li><dfn>custom_fields="yes"</dfn> &mdash; if set to "yes", will also parse custom profile data for bookmarked members</li>
+<li><dfn>prefix</dfn> &mdash; optional prefix for variables. Ex. if you set prefix="bookmark" you'll be able to use {bookmark:title} instead of {title} </li>
+<li><dfn>sort</dfn> &mdash; sorting order. Possible values are 'asc', 'desc' (default) and 'random'</li>
+<li><dfn>return_ids_string</dfn> &mdash; return ONLY pipe-separated string ot member_ids (1|7|15|26) as <dfn>{ids_string}</dfn> variable</li>
+</ul>
+</p>
+
+<p><strong>Single variables:</strong>
+<ul>
+<li><dfn>remove_url</dfn> &mdash; URL that user can click to remove member from bookmarks</li>
+<li><dfn>bookmark_date format="%Y-%m-%d"</dfn> &mdash; the date when member was favorited</li>
+<li><dfn>member_id</dfn></li>
+<li><dfn>username</dfn></li>
+<li><dfn>screen_name</dfn></li>
+<li><dfn>email</dfn></li>
+<li>and other standard member profile fields</li>
+</ul>
+</p>
+
+<p>Additionally, if you have custom_fields="yes" set then all custom profile fields are parsed.</p>
+
+
+
+
+
+
+
+	<h3><a name="list-comments" href="#top">&uarr;</a>Comments</h3>
+
+<code>
+{exp:bookmarks:comments member_data="yes"}<br />
+{if count==1}		<br />
+&lt;div class="box2"&gt;<br />
+	&lt;div class="header"&gt;<br />
+		&lt;div class="t"&gt;<br />
+			&lt;h3&gt;COMMENTS I LIKE&lt;/h3&gt;<br />
+		&lt;/div&gt;<br />
+	&lt;/div&gt;<br />
+	&lt;ul class="broadcasters"&gt;<br />
+{/if}		<br />
+		&lt;li&gt;<br />
+			&lt;a class="img" href="{comment_url_title_auto_path}#c{comment_id}"&gt;&lt;img src="{photo_url}" alt="{title}" /&gt;&lt;/a&gt;<br />
+			&lt;div class="text"&gt;<br />
+				&lt;a href="{comment_url_title_auto_path}#c{comment_id}"&gt;{title}&lt;/a&gt;<br />
+				&lt;p&gt;{comment}&lt;/p&gt;<br />
+			&lt;/div&gt;<br />
+		&lt;/li&gt;<br />
+{if count==total_results}<br />
+	&lt;/ul&gt;<br />
+&lt;/div&gt;<br />
+{/if}<br />
+{/exp:bookmarks:comments}<br />
+</code>
+
+<p><strong>{exp:bookmarks:comments}</strong> tag will display all comments bookmarked by user.</p>
+
+<p><strong>Tag parameters (all optional):</strong>
+<ul>
+<li><dfn>member_id</dfn> &mdash; ID of member to fetch bookmarks. Defaults to logged in user</li>
+<li><dfn>username</dfn> &mdash; alternatively, you can specify username istead of member_id</li>
+<li><dfn>group_id</dfn> &mdash; set this parameter to Channel ID if you want to restrict output to comments to entries from certain channel</li>
+<li><dfn>member_data="yes"</dfn> &mdash; if set to "yes", will also parse comment author's data</li>
+<li><dfn>prefix</dfn> &mdash; optional prefix for variables. Ex. if you set prefix="bookmark" you'll be able to use {bookmark:title} instead of {title} </li>
+<li><dfn>sort</dfn> &mdash; sorting order. Possible values are 'asc', 'desc' (default) and 'random'</li>
+<li><dfn>return_ids_string</dfn> &mdash; return ONLY pipe-separated string ot comment_ids (1|7|15|26) as <dfn>{ids_string}</dfn> variable</li>
+</ul>
+</p>
+
+<p><strong>Single variables:</strong>
+<ul>
+<li><dfn>remove_url</dfn> &mdash; URL that user can click to remove entry from bookmarks</li>
+<li><dfn>bookmark_date format="%Y-%m-%d"</dfn> &mdash; the date when entry was favorited</li>
+<li><dfn>entry_id</dfn></li>
+<li><dfn>title</dfn></li>
+<li><dfn>url_title</dfn></li>
+<li><dfn>comment_id</dfn></li>
+<li><dfn>comment_url_title_auto_path</dfn></li>
+<li><dfn>comment_entry_id_auto_path</dfn></li>
+<li><dfn>comment</dfn></li>
+<li>and some other standard comment variables</li>
+</ul>
+</p>
+
+<p>If you have member_data="yes" set then comment author's standard member profile fields are also parsed.</p>
+
+
+
+
+
+
+
+
+
+
+	<h3><a name="list-categories" href="#top">&uarr;</a>Categories</h3>
+
+<code>
+{exp:bookmarks:categories custom_fields="yes"}<br />
+{if count==1}		<br />
+&lt;div class="box2"&gt;<br />
+	&lt;div class="header"&gt;<br />
+		&lt;div class="t"&gt;<br />
+			&lt;h3&gt;CATEGORIES I LIKE&lt;/h3&gt;<br />
+		&lt;/div&gt;<br />
+	&lt;/div&gt;<br />
+	&lt;ul class="broadcasters"&gt;<br />
+{/if}		<br />
+		&lt;li&gt;<br />
+			&lt;a class="img" href="{path=site/category/{category_url_title}}"&gt;&lt;img src="{category_image}" alt="{category_name}" /&gt;&lt;/a&gt;<br />
+			&lt;div class="text"&gt;<br />
+				&lt;a href="{path=site/category/{category_url_title}}"&gt;{category_name}&lt;/a&gt;<br />
+				{if custom_category_desc}&lt;p&gt;{custom_category_desc}&lt;/p&gt;{/if}}<br />
+			&lt;/div&gt;<br />
+		&lt;/li&gt;<br />
+{if count==total_results}<br />
+	&lt;/ul&gt;<br />
+&lt;/div&gt;<br />
+{/if}<br />
+{/exp:bookmarks:categories}<br />
+</code>
+
+<p><strong>{exp:bookmarks:categories}</strong> tag will display all categories bookmarked by user.</p>
+
+<p><strong>Tag parameters (all optional):</strong>
+<ul>
+<li><dfn>member_id</dfn> &mdash; ID of member to fetch bookmarks. Defaults to logged in user</li>
+<li><dfn>username</dfn> &mdash; alternatively, you can specify username istead of member_id</li>
+<li><dfn>group_id</dfn> &mdash; set this parameter to Category Group ID if you want to restrict output to categories from certain group</li>
+<li><dfn>custom_fields="yes"</dfn> &mdash; if set to "yes", will also parse custom category fields data for bookmarked categories</li>
+<li><dfn>prefix</dfn> &mdash; optional prefix for variables. Ex. if you set prefix="bookmark" you'll be able to use {bookmark:title} instead of {title} </li>
+<li><dfn>sort</dfn> &mdash; sorting order. Possible values are 'asc', 'desc' (default) and 'random'</li>
+<li><dfn>return_ids_string</dfn> &mdash; return ONLY pipe-separated string ot category_ids (1|7|15|26) as <dfn>{ids_string}</dfn> variable</li>
+</ul>
+</p>
+
+<p><strong>Single variables:</strong>
+<ul>
+<li><dfn>remove_url</dfn> &mdash; URL that user can click to remove category from bookmarks</li>
+<li><dfn>bookmark_date format="%Y-%m-%d"</dfn> &mdash; the date when category was favorited</li>
+<li><dfn>category_id</dfn></li>
+<li><dfn>category_name</dfn></li>
+<li><dfn>category_url_title</dfn></li>
+<li><dfn>category_description</dfn></li>
+<li>and other standard category fields</li>
+</ul>
+</p>
+
+<p>Additionally, if you have custom_fields="yes" set then all custom category fields are parsed.</p>
+
+
+
+
+	<h2><a name="by" href="#top">&uarr;</a>Listing people who bookmarked certain data</h2>
+
+
+<code>
+{exp:comment:entries}<br />
+{if no_results}no comments{/if}<br />
+&lt;li&gt;<br />
+{comment}<br />
+&lt;span&gt;<br />
+Bookmarked by <br />
+{exp:bookmarks:by type="comment" data_id="{comment_id}" backspace="1"}<br />
+{if no_results}none{/if}<br />
+{screen_name}, <br />
+{/exp:bookmarks:by}<br />
+&lt;/span&gt;<br />
+&lt;/li&gt;<br />
+{/exp:comment:entries}
+</code>
+
+
+
+
+<p><strong>{exp:bookmarks:by}</strong> tag will display list or all people who bookmarked certain data.</p>
+
+<p><strong>Tag parameters:</strong>
+<ul>
+<li><dfn>type</dfn> &mdash; the type of data. Can be 'entry', 'comment', 'member' or 'category'. Defaults to 'entry'</li>
+<li><dfn>data_id</dfn> &mdash; the ID of item to check against (value of entry_id, comment_id, member_id or category_id)</li>
+<li><dfn>custom_fields="yes"</dfn> &mdash; if set to "yes", will also parse custom profile fiels from profiles of those who bookmarked</li>
+<li><dfn>prefix</dfn> &mdash; optional prefix for variables. Ex. if you set prefix="bookmark" you'll be able to use {bookmark:title} instead of {title} </li>
+</ul>
+</p>
+
+<p><strong>Single variables:</strong>
+<ul>
+<li><dfn>member_id</dfn></li>
+<li><dfn>username</dfn></li>
+<li><dfn>screen_name</dfn></li>
+<li><dfn>email</dfn></li>
+<li><dfn>photo_url</dfn></li>
+<li><dfn>avatar_url</dfn></li>
+<li>and other standard member profile fields</li>
+</ul>
+</p>
+
+<p>Additionally, if you have custom_fields="yes" set then all custom profile fields are parsed.</p>
+
+
+
+	<h2><a name="by" href="#total">&uarr;</a>Total bookmarks</h2>
+
+
+<code>
+{exp:bookmarks:members total_only="yes"}<br />
+Members followed: {total_results}
+{/exp:bookmarks:members}<br />
+</code>
+
+<code>
+Categories watched: {exp:bookmarks:categories total_only="yes"}<br />
+</code>
+
+
+<p><strong>total_only="yes"</strong> parameter added to any of module tags: entries/members/categories/comments/by will result in tag returning only total number of bookmarks by member for tag's datatype.</p>
+
+<p>It can be used without closing tag. If closing tag is used, the number of bookmarks is contained in the only availabe variable, <dfn>total_results</dfn>
+</p>
+
+<p>You can also use <strong>{exp:bookmarks:total}</strong> (as single tag or pair) to get tital number of member's bookmarks, irrespectible of type.</p>
+<code>
+{exp:bookmarks:total}<br />
+{total_results}
+{/exp:bookmarks:total}<br />
+</code>
+
+
+
+</div>
+
+<p class="center"><a href="#top">Top of page</a></p>
+
+<!-- {user_guide_comments} -->
+
+<div id="footer">
+  <address>Copyright &copy; 2011 Yuri Salimovskiy <a href="http://www.intoeetive.com/">intoEEtive.com</a></address>
+</div>
+
+</body>
+</html>
