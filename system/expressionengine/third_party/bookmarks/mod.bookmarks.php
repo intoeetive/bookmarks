@@ -250,6 +250,18 @@ class Bookmarks {
 		);
 		$this->EE->db->insert('bookmarks', $data);
 		
+		// -------------------------------------------
+		// 'bookmarks_bookmark_add_end' hook.
+		//  - Do something when bookmark id added
+		//
+			if ($this->EE->extensions->active_hook('bookmarks_bookmark_add_end') === TRUE)
+			{
+				$edata = $this->EE->extensions->call('bookmarks_bookmark_add_end', $data, $this->EE->db->insert_id());
+				if ($this->EE->extensions->end_script === TRUE) return $edata;
+			}
+		//
+        // -------------------------------------------
+		
 		if ($ajax)
         {
             echo lang('bookmarked').' '.lang($type);
