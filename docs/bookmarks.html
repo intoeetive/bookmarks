@@ -79,6 +79,7 @@
 <li><dfn>type</dfn> &mdash; the type of data that is checked/bookmarked. Can be 'entry', 'comment', 'member' or 'category'. Defaults to 'entry'</li>
 <li><dfn>data_id</dfn> &mdash; the ID of item to check/bookmark (value of entry_id, comment_id, member_id or category_id)</li>
 <li><dfn>form="yes"</dfn> &mdash; wraps data into for for adding/removing bookmark</li>
+<li><dfn>site_id</dfn> &mdash; you can restrict check to certain site. Defaults to current site. Separate multiple site_id's with a pipe |</li>
 <li><dfn>id</dfn> &mdash; form ID (defaults to 'bookmark_form')</li>
 <li><dfn>class</dfn> &mdash; form class (defaults to 'bookmark_form')</li>
 <li><dfn>name</dfn> &mdash; form name (defaults to 'bookmark_form')</li>
@@ -124,6 +125,7 @@
 <li><dfn>member_id</dfn> &mdash; ID of member to fetch bookmarks. Defaults to logged in user</li>
 <li><dfn>username</dfn> &mdash; alternatively, you can specify username istead of member_id</li>
 <li><dfn>group_id</dfn> &mdash; set this parameter to Channel ID if you want to restrict output to entries from certain channel</li>
+<li><dfn>site_id</dfn> &mdash; you can restrict output to certain site. Defaults to current site. Separate multiple site_id's with a pipe |</li>
 <li><dfn>custom_fields="yes"</dfn> &mdash; if set to "yes", will also parse custom fields data for bookmarked entries</li>
 <li><dfn>member_data="yes"</dfn> &mdash; if set to "yes", will also parse entry author's data</li>
 <li><dfn>prefix</dfn> &mdash; optional prefix for variables. Ex. if you set prefix="bookmark" you'll be able to use {bookmark:title} instead of {title} </li>
@@ -245,6 +247,7 @@
 <li><dfn>member_id</dfn> &mdash; ID of member to fetch bookmarks. Defaults to logged in user</li>
 <li><dfn>username</dfn> &mdash; alternatively, you can specify username istead of member_id</li>
 <li><dfn>group_id</dfn> &mdash; set this parameter to Channel ID if you want to restrict output to comments to entries from certain channel</li>
+<li><dfn>site_id</dfn> &mdash; you can restrict output to certain site. Defaults to current site. Separate multiple site_id's with a pipe |</li>
 <li><dfn>member_data="yes"</dfn> &mdash; if set to "yes", will also parse comment author's data</li>
 <li><dfn>prefix</dfn> &mdash; optional prefix for variables. Ex. if you set prefix="bookmark" you'll be able to use {bookmark:title} instead of {title} </li>
 <li><dfn>sort</dfn> &mdash; sorting order. Possible values are 'asc', 'desc' (default) and 'random'</li>

@@ -3,7 +3,7 @@
 if ( ! defined('BOOKMARKS_ADDON_NAME'))
 {
 	define('BOOKMARKS_ADDON_NAME',         'Bookmarks');
-	define('BOOKMARKS_ADDON_VERSION',      '0.2.1');
+	define('BOOKMARKS_ADDON_VERSION',      '0.2.2');
 }
 
 $config['name'] = BOOKMARKS_ADDON_NAME;

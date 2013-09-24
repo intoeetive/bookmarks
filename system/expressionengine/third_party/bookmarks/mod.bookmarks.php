@@ -75,6 +75,8 @@ class Bookmarks {
     	{
     		return $this->EE->TMPL->no_results();
     	}
+        
+        $sites_arr = ($this->EE->TMPL->fetch_param('site_id')) ? explode("|", $this->EE->TMPL->fetch_param('site_id')) : array($this->EE->config->item('site_id'));
     	
     	$tagdata = $this->EE->TMPL->tagdata;
     	
@@ -87,7 +89,7 @@ class Bookmarks {
     	$q = $this->EE->db->select('bookmark_id')
 				->from('bookmarks')
 				->where('member_id', $this->EE->session->userdata('member_id'))
-				->where('site_id', $this->EE->config->item('site_id'))
+				->where_in('site_id', $sites_arr)
 				->where('type', $type)
 				->where('data_id', $data_id)
 				->limit(1)
@@ -399,7 +401,8 @@ class Bookmarks {
 			$this->EE->db->where('username', $username);
 		}
 		
-		$this->EE->db->where('exp_bookmarks.site_id', $this->EE->config->item('site_id'));
+        $sites_arr = ($this->EE->TMPL->fetch_param('site_id')) ? explode("|", $this->EE->TMPL->fetch_param('site_id')) : array($this->EE->config->item('site_id'));
+		$this->EE->db->where_in('exp_bookmarks.site_id', $sites_arr);
 		if ($type!='all')
 		{
 			$this->EE->db->where('exp_bookmarks.type', $type);
@@ -494,12 +497,14 @@ class Bookmarks {
 			return $output;
 		}
 		
+        $sites_arr = ($this->EE->TMPL->fetch_param('site_id')) ? explode("|", $this->EE->TMPL->fetch_param('site_id')) : array($this->EE->config->item('site_id'));
+        
 		$join = array();
 		$sql_what = "exp_channel_titles.*, exp_channels.channel_url, exp_channels.comment_url, exp_channels.channel_title";
 		$join[] = array('exp_channels', 'exp_channel_titles.channel_id = exp_channels.channel_id', 'left');
 		if ($this->EE->TMPL->fetch_param('custom_fields')=="yes")
 		{
-			$q = $this->EE->db->select('channel_id, channel_html_formatting, channel_allow_img_urls, channel_auto_link_urls')->from('exp_channels')->where('site_id', $this->EE->config->item('site_id'))->get();
+			$q = $this->EE->db->select('channel_id, channel_html_formatting, channel_allow_img_urls, channel_auto_link_urls')->from('exp_channels')->where_in('site_id', $sites_arr)->get();
 			$channel_formatting = array();
 			foreach ($q->result_array() as $row)
 			{
@@ -512,7 +517,7 @@ class Bookmarks {
 			$q = $this->EE->db->select('field_id, field_name, field_fmt, channel_html_formatting, channel_allow_img_urls, channel_auto_link_urls')
 					->from('exp_channel_fields')
 					->join('exp_channels', 'exp_channels.field_group=exp_channel_fields.group_id', 'left')
-					->where('exp_channel_fields.site_id', $this->EE->config->item('site_id'))
+					->where_in('exp_channel_fields.site_id', $sites_arr)
 					->get();
 			$field_formatting = array();
 			foreach ($q->result_array() as $row)
@@ -871,7 +876,7 @@ class Bookmarks {
 			
 			$q = $this->EE->db->select('field_id, group_id, field_name')
 					->from('exp_category_fields')
-					->where('site_id', $this->EE->config->item('site_id'))
+					->where_in('site_id', $sites_arr)
 					->get();
 			$field_formatting = array();
 			foreach ($q->result_array() as $row)
