@@ -313,14 +313,14 @@ class Bookmarks {
 		$this->EE->db->select('bookmark_id, type')
 				->from('bookmarks')
 				->where('member_id', $this->EE->session->userdata('member_id'));
-		if ($this->EE->input->get_post('bookmark_id')!='')
-		{
-			$this->EE->db->where('bookmark_id', $this->EE->input->get_post('bookmark_id'));
-		}
-		else
+		if ($this->EE->input->get_post('data_id')!='')
 		{
 			$this->EE->db->where('data_id', $this->EE->input->get_post('data_id'));
 			$this->EE->db->where('type', $this->EE->input->get_post('type'));
+		}
+		else
+		{
+			$this->EE->db->where('bookmark_id', $this->EE->input->get_post('bookmark_id'));
 		}
 		$q = $this->EE->db->get();
 		if ($q->num_rows()==0)
@@ -564,7 +564,10 @@ class Bookmarks {
 		foreach ($query->result_array() as $row)
 		{
 	
-	        $variable_row = $row;
+	        foreach ($row as $key=>$val)
+            {
+                $variable_row[$var_prefix.$key] = $val;
+            }
 	        if ($this->EE->TMPL->fetch_param('member_data')=="yes")
 	        {
 		        $variable_row[$var_prefix.'avatar_url'] = ($row['avatar_filename'] != '') ? $this->EE->config->slash_item('avatar_url').$row['avatar_filename'] : '';
@@ -685,7 +688,10 @@ class Bookmarks {
 			unset($row["unique_id"]);
 			unset($row["crypt_key"]);
 			unset($row["authcode"]);
-	        $variable_row = $row;
+	        foreach ($row as $key=>$val)
+            {
+                $variable_row[$var_prefix.$key] = $val;
+            }
 
           	if ($this->EE->TMPL->fetch_param('custom_fields')=="yes")
 	        {
@@ -794,7 +800,10 @@ class Bookmarks {
 				'auto_links'	=> $row['channel_auto_link_urls']
 			);
 			$row['comment_url'] = ($row['comment_url']!='')?$row['comment_url']:$row['channel_url'];
-	        $variable_row = $row;
+	        foreach ($row as $key=>$val)
+            {
+                $variable_row[$var_prefix.$key] = $val;
+            }
 	        if ($this->EE->TMPL->fetch_param('member_data')=="yes")
 	        {
 		        $variable_row[$var_prefix.'avatar_url'] = ($row['avatar_filename'] != '') ? $this->EE->config->slash_item('avatar_url').$row['avatar_filename'] : '';
@@ -1032,7 +1041,10 @@ class Bookmarks {
 			unset($row["unique_id"]);
 			unset($row["crypt_key"]);
 			unset($row["authcode"]);
-			$variable_row = $row;
+			foreach ($row as $key=>$val)
+            {
+                $variable_row[$var_prefix.$key] = $val;
+            }
 
           	if ($this->EE->TMPL->fetch_param('custom_fields')=="yes")
 	        {
