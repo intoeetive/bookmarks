@@ -29,34 +29,33 @@ class Bookmarks_upd {
     var $version = BOOKMARKS_ADDON_VERSION;
     
     function __construct() { 
-        // Make a local reference to the ExpressionEngine super object 
-        $this->EE =& get_instance(); 
+
     } 
     
     function install() { 
         
-        $this->EE->load->dbforge(); 
+        ee()->load->dbforge(); 
         
         //----------------------------------------
 		// EXP_MODULES
 		// The settings column, Ellislab should have put this one in long ago.
 		// No need for a seperate preferences table for each module.
 		//----------------------------------------
-		if ($this->EE->db->field_exists('settings', 'modules') == FALSE)
+		if (ee()->db->field_exists('settings', 'modules') == FALSE)
 		{
-			$this->EE->dbforge->add_column('modules', array('settings' => array('type' => 'TEXT') ) );
+			ee()->dbforge->add_column('modules', array('settings' => array('type' => 'TEXT') ) );
 		}
         
         $settings = array();
         
         $data = array( 'module_name' => 'Bookmarks' , 'module_version' => $this->version, 'has_cp_backend' => 'n', 'settings'=> serialize($settings) ); 
-        $this->EE->db->insert('modules', $data); 
+        ee()->db->insert('modules', $data); 
         
         $data = array( 'class' => 'Bookmarks' , 'method' => 'add' ); 
-        $this->EE->db->insert('actions', $data); 
+        ee()->db->insert('actions', $data); 
         
         $data = array( 'class' => 'Bookmarks' , 'method' => 'remove' ); 
-        $this->EE->db->insert('actions', $data); 
+        ee()->db->insert('actions', $data); 
         
         //exp_bookmarks
         $fields = array(
@@ -69,13 +68,13 @@ class Bookmarks_upd {
 			'bookmark_date'	    => array('type' => 'INT',		'unsigned' => TRUE, 'default' => 0)
 		);
 
-		$this->EE->dbforge->add_field($fields);
-		$this->EE->dbforge->add_key('bookmark_id', TRUE);
-		$this->EE->dbforge->add_key('member_id');
-		$this->EE->dbforge->add_key('data_id');
-		$this->EE->dbforge->add_key('site_id');
-		$this->EE->dbforge->add_key('data_group_id');
-		$this->EE->dbforge->create_table('bookmarks', TRUE);
+		ee()->dbforge->add_field($fields);
+		ee()->dbforge->add_key('bookmark_id', TRUE);
+		ee()->dbforge->add_key('member_id');
+		ee()->dbforge->add_key('data_id');
+		ee()->dbforge->add_key('site_id');
+		ee()->dbforge->add_key('data_group_id');
+		ee()->dbforge->create_table('bookmarks', TRUE);
         
         return TRUE; 
         
@@ -83,21 +82,21 @@ class Bookmarks_upd {
     
     function uninstall() { 
 
-        $this->EE->load->dbforge(); 
+        ee()->load->dbforge(); 
 		
-		$this->EE->db->select('module_id'); 
-        $query = $this->EE->db->get_where('modules', array('module_name' => 'Bookmarks')); 
+		ee()->db->select('module_id'); 
+        $query = ee()->db->get_where('modules', array('module_name' => 'Bookmarks')); 
         
-        $this->EE->db->where('module_id', $query->row('module_id')); 
-        $this->EE->db->delete('module_member_groups'); 
+        ee()->db->where('module_id', $query->row('module_id')); 
+        ee()->db->delete(version_compare(APP_VER, '6.0', '>=') ? 'module_member_roles' : 'module_member_groups'); 
         
-        $this->EE->db->where('module_name', 'Bookmarks'); 
-        $this->EE->db->delete('modules'); 
+        ee()->db->where('module_name', 'Bookmarks'); 
+        ee()->db->delete('modules'); 
         
-        $this->EE->db->where('class', 'Bookmarks'); 
-        $this->EE->db->delete('actions'); 
+        ee()->db->where('class', 'Bookmarks'); 
+        ee()->db->delete('actions'); 
         
-        $this->EE->dbforge->drop_table('bookmarks');
+        ee()->dbforge->drop_table('bookmarks');
         
         return TRUE; 
     } 

@@ -1,58 +1,24 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
-<head>
-  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-
-  <title>Bookmarks</title>
-
-  <style type="text/css" media="screen,print">@import url("docs.css");</style>
-<META http-equiv=Content-Type content="text/html; charset=utf-8"></head>
-
-<body>
-<div><a name="top"></a></div>
-
-<div id="header">
-<table cellpadding="0" cellspacing="0" border="0" style="width:100%;"><tr>
-<td class="docheading" style="width:300px;"><h1 style="font-size: 18px; font-weight: bold;">intoEEtive.com</h1></td>
-<td class="searchbox">
-
-</td>
-</tr>
-</table>
-</div>
 
 
-<div id="navlinks">
-<a href="http://www.intoeetive.com/">intoEEtive.com</a> &gt;
-<a href="http://www.intoeetive.com/index.php/category/extending_ee">EE add-ons</a> &gt;
-<a href="http://www.intoeetive.com/index.php/comments/bookmarks">Bookmarks</a>
-</div>
+<p>This module lets people bookmark (add to favorites) ExpressionEngine entries, members, comments and categories for quick access.</p>
+  
+  <ul>		
+      
+      <li><a href="#check">Checking/adding a bookmark</a></li>
+      <li><a href="#list">Listing bookmarked:</a>
+          <ul>
+          <li><a href="#list-entries">Entries</a></li>
+          <li><a href="#list-members">Members</a></li>   
+    <li><a href="#list-comments">Comments</a></li>           
+          <li><a href="#list-categories">Categories</a></li>
+          </ul>
+      </li>
+      <li><a href="#by">Listing people who bookmarked certain data</a></li>
+      <li><a href="#total">Total bookmarks</a></li>
+      
+</ul>
 
-
-<div id="content">
-
-	<h1>Bookmarks</h1>
-
-	<p>This module lets people bookmark (add to favorites) ExpressionEngine entries, members, comments and categories for quick access.</p>
-    
-   	<ul>		
-        
-        <li><a href="#check">Checking/adding a bookmark</a></li>
-        <li><a href="#list">Listing bookmarked:</a>
-            <ul>
-            <li><a href="#list-entries">Entries</a></li>
-            <li><a href="#list-members">Members</a></li>   
-			<li><a href="#list-comments">Comments</a></li>           
-            <li><a href="#list-categories">Categories</a></li>
-            </ul>
-        </li>
-        <li><a href="#by">Listing people who bookmarked certain data</a></li>
-        <li><a href="#total">Total bookmarks</a></li>
-        
-	</ul>
-
-	<h2><a name="check" href="#top">&uarr;</a>Checking/adding a bookmark</h2>
+<h2><a name="check" href="#top">&uarr;</a>Checking/adding a bookmark</h2>
 
 <code>
 {exp:bookmarks:check type="comment" data_id="{comment_id}" form="yes" return="SAME_PAGE"}<br />
@@ -413,18 +379,3 @@ Categories watched: {exp:bookmarks:categories total_only="yes"}<br />
 {total_results}
 {/exp:bookmarks:total}<br />
 </code>
-
-
-
-</div>
-
-<p class="center"><a href="#top">Top of page</a></p>
-
-<!-- {user_guide_comments} -->
-
-<div id="footer">
-  <address>Copyright &copy; 2011 Yuri Salimovskiy <a href="http://www.intoeetive.com/">intoEEtive.com</a></address>
-</div>
-
-</body>
-</html>
